@@ -1,0 +1,85 @@
+<header>
+  <h1>Edit <%= @employee.first_last %></h1>
+</header>
+<br>
+<%= form_for @employee do |f| %>
+  <div class="container">
+    <div class="row well well-lg">
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <b><%= f.label :first_name %></b>
+        <br><br>
+        <b><%= f.label :last_name %></b>
+        <br><br>
+        <%= f.label :active %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.text_field :first_name %>
+        <br><br>
+        <%= f.text_field :last_name %>
+        <br><br>
+        <%= f.check_box :active %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.label :pay_type %>
+        <br><br>
+        <%= f.label :pay_rate %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.select :pay_type, ['Hourly', 'Salary'] %>
+        <br><br>
+        <%= f.number_field :pay_rate, value: number_to_currency(f.object.pay_rate.to_f, delimiter: '', unit: ''), step: :any %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.label :filing_status, "W4 Filing" %>
+        <br><br>
+        <%= f.label :allowances %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.select :filing_status, ["Single", "Married"] %>
+        <br><br>
+        <%= f.number_field :allowances %>
+      </div>
+    </div>
+  </div>
+  <%= f.hidden_field(:company_id, value: current_company.id) %>
+
+<hr>
+<h2>Recurring Adjustments</h2>
+<div class="container">
+  <div class="row">
+    <%= f.fields_for :adjustments do |adj| %>
+      <div class="col-4">
+        <div class="well well-lg">
+          <%= adj.hidden_field :employee_id, value: @employee.id %>
+
+          <p><%= adj.label :adj_type %>
+          <%= adj.select :adj_type, ["Deduction", "Addition"] %></p>
+
+          <p><%= adj.label :description %>
+          <%= adj.text_field :description %></p>
+
+          <p><%= adj.label :adj_amount %>
+          <%= adj.number_field :adj_amount, value: number_to_currency(adj.object.adj_amount.to_f, delimiter: '', unit: ''), step: :any %></p>
+
+          <button ><%= link_to "Remove adjustment", "/employees/adjustment/#{adj.object.id}", method: :delete %></button>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br>
+<br>
+
+<button style="purple-button"><%= link_to "Add adjustment", new_emp_adj_path(employee_id: @employee.id), method: :post %></button>
+
+<br><br><br>
+
+<nav class="nav navbar fixed-bottom navbar-expand-lg navbar-light bg-light" style="margin: 0 25px 25px 25px;">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav purple-button">
+      <div><%= f.submit%></div>
+    </ul>
+  </div>
+</nav>
+<% end %>

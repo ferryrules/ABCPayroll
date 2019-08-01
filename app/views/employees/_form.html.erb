@@ -1,0 +1,52 @@
+<br>
+<%= form_for @employee do |f| %>
+<div class="container">
+  <div class="row well well-lg">
+    <div class="col-sm">
+      <b><%= f.label :first_name %></b>
+      <br>
+      <b><%= f.label :last_name %></b>
+    </div>
+    <div class="col-sm">
+      <%= f.text_field :first_name %>
+      <br>
+      <%= f.text_field :last_name %>
+    </div>
+    <div class="col-sm">
+      <%= f.label :pay_type %>
+      <br>
+      <%= f.label :pay_rate %>
+    </div>
+    <div class="col-sm">
+      <%= f.select :pay_type, ['Hourly', 'Salary'] %>
+      <br>
+      <%= f.number_field :pay_rate, value: number_to_currency(f.object.pay_rate.to_f, delimiter: '', unit: ''), step: :any %>
+    </div>
+    <div class="col-sm">
+      <%= f.label :filing_status, "W4 Filing" %>
+      <br>
+      <%= f.label :allowances %>
+    </div>
+    <div class="col-sm">
+      <%= f.select :filing_status, ["Single", "Married"] %>
+      <br>
+      <%= f.number_field :allowances %>
+    </div>
+    <div class="col-sm">
+      <%= f.label :active %>
+      <br>
+      <%= f.check_box :active %>
+    </div>
+  </div>
+</div>
+  <%= f.hidden_field(:company_id, value: current_company.id) %>
+
+  <nav class="nav navbar fixed-bottom navbar-expand-lg navbar-light bg-light" style="margin: 0 25px 25px 25px;">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav nav purple-button">
+        <div><%= f.submit%></div>
+      </ul>
+    </div>
+  </nav>
+
+<% end %>

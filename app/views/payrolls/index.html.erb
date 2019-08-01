@@ -1,0 +1,23 @@
+<h1>Previous Payrolls</h1>
+
+<br>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col-4">Pay Period</th>
+      <th scope="col-4">Check Date</th>
+      <th scope="col-4">Status</th>
+      <th scope="col-4" style="text-align:center">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_company.payrolls.reverse.each do |pr| %>
+        <tr>
+          <td><%= link_to "#{pr.start_date} - #{pr.end_date}", pr %></td>
+          <td><%= pr.check_date %></td>
+          <td><%= pr.status %></td>
+          <td class="delete" style="text-align:center"><%= link_to 'X', pr, method: :delete , data: {confirm: "Are you sure want to delete this payroll?"} %></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

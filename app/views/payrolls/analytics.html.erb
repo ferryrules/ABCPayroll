@@ -1,0 +1,29 @@
+<div class="" style="margin-right: 45px;">
+  <h1>Payroll Data</h1>
+  <br>
+  <table class="table table-hover">
+    <thead>
+      <tr style="text-align:center">
+        <th scope="col-4">Pay Period</th>
+        <th scope="col-4">Hourly Total</th>
+        <th scope="col-4">Salary Total</th>
+        <th scope="col-4">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if current_company.payrolls.any?%>
+        <% current_company.payrolls.limit(5).reverse.each do |pr| %>
+          <tr style="text-align:center">
+            <td><%= link_to "#{pr.start_date } - #{pr.end_date}", analytics_show_path(pr.id) %></td>
+            <td>$<%= pr.hourly_paychecks.sum { |pc| pc.total_pay_amt} %></td>
+            <td>$<%= pr.salary_paychecks.sum { |pc| pc.total_pay_amt} %></td>
+            <td>$<%= pr.paychecks.sum { |pc| pc.total_pay_amt} %></td>
+          </tr>
+          <p></p>
+        <% end %>
+      <% else %>
+        No analytics to show currently
+      <% end %>
+    </tbody>
+  </table>
+</div>

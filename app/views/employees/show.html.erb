@@ -1,0 +1,33 @@
+<div class="well well-lg">
+  <h1><%= @employee.first_last %></h1>
+  <p>Pay Type: <%= @employee.pay_type %></p>
+  <p>Pay Rate: $<%= @employee.pay_rate %><%= " per hour" if @employee.pay_type == "Hourly" %></p>
+  <p>Employment Status: <%= @employee.active == true ? "Active" : "Inactive" %></p>
+  <p>Filing Status: <%= @employee.filing_status %></p>
+  <p>Allowances: <%= @employee.allowances %></p>
+
+  <div class="well well-sm">
+    <p>
+      <b><u>Recurring Adjustments</u></b>
+    </p>
+    <blockquote>
+      <% if @employee.adjustments.any? %>
+        <% @employee.adjustments.each do |adj| %>
+          <p><b>&middot;<%= adj.adj_type %></b><%= ": #{adj.description} for $#{adj.adj_amount}" %></p>
+        <% end %>
+      <% else %>
+        None
+      <% end %>
+    </blockquote>
+  </div>
+</div>
+
+<br>
+
+<nav class="nav navbar fixed-bottom navbar-expand-lg navbar-light bg-light" style="margin: 0 25px 25px 25px;">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav nav purple-button">
+      <div><%= button_to "Edit this Employee", edit_employee_path(@employee), method: :get %></div>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,112 @@
+<header>
+  <h1>Payroll from <%= @payroll.start_date %> to <%= @payroll.end_date %></h1>
+</header>
+
+<br>
+<% @payroll.paychecks.each do |paycheck| %>
+<div class="container-float">
+  <div class="well well-lg">
+    <div class="row">
+      <div class="col-3" style="margin: 0 10px 0 0;">
+        <h3><b><%= paycheck.employee.full_name %></b></h3><br>
+        Pay Type: <%= paycheck.employee.pay_type %><br>
+        Pay Rate: $<%= paycheck.employee.pay_rate %>
+        <br>
+        <br>
+        <hr>
+        <br>
+
+        <% if !paycheck.paycheck_adjustments.empty? %>
+          <h3><b><u>Adjustments</u></b></h3>
+          <% paycheck.paycheck_adjustments.each do |adj| %>
+            <% adj_type = (adj.adj_type ? adj.adj_type : "PLEASE UPDATE!") %>
+            <b><%= adj_type %>: </b><%= "#{adj.description} for $#{adj.adj_amount}" %><br>
+          <% end %>
+        <% end %>
+        <%= link_to "Add Adjustments / Edit Hours", edit_paycheck_path(paycheck) %>
+      </div>
+
+      <div class="col-6">
+        <div class="well well-sm row">
+          <div class="col-4">
+            Hours<br>
+          </div>
+          <div class="col-sm">
+            <%= paycheck.hours %><br>
+          </div>
+        </div>
+
+        <div class="well well-sm row">
+          <div class="col-4">
+            OT Hours<br>
+          </div>
+          <div class="col-sm">
+            <%= paycheck.ot_hours %><br>
+          </div>
+        </div>
+
+        <div class="well well-sm row">
+          <div class="col-4">
+            Holiday Hours<br>
+          </div>
+          <div class="col-sm">
+            <%= paycheck.holiday_hours %><br>
+          </div>
+        </div>
+
+        <div class="well well-sm row">
+          <div class="col-4">
+            Sick Hours<br>
+          </div>
+          <div class="col-sm">
+            <%= paycheck.sick_hours %><br>
+          </div>
+        </div>
+
+        <div class="well well-sm row">
+          <div class="col-4">
+            Vacation Hours<br>
+          </div>
+          <div class="col-sm">
+            <%= paycheck.vacation_hours %><br>
+          </div>
+        </div>
+
+        <div class="well well-sm row">
+          <div class="col-4">
+            PTO Hours
+          </div>
+          <div class="col-sm">
+            <%= paycheck.pto_hours %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm" style="align: bottom;">
+        <% adds = paycheck.paycheck_adjustments.where(adj_type: "Addition") %>
+        <% deds = paycheck.paycheck_adjustments.where(adj_type: "Deduction") %>
+        <% final_sum = paycheck.total_pay_amt + adds.sum{|a| a.adj_amount} - deds.sum{|d| d.adj_amount}%>
+        <%= "Total Pay Sum: $#{final_sum}" %>
+      </div>
+    </div>
+  </div>
+</div>
+  <br><hr><br>
+<br>
+<% end %>
+
+<nav class="nav navbar fixed-bottom navbar-expand-lg navbar-light bg-light" style="margin: 0 25px 25px 25px;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="<%= payroll_path(@payroll) %>">
+      <h4 class="alert glyphicon glyphicon-menu-up"> Payroll: <%= @payroll.start_date %> - <%= @payroll.end_date %></h4>
+    </a>
+    <ul class="nav navbar-nav">
+      <div class="alert alert-warning" style="margin: 0 3px;"><a href="<%= payroll_path(@payroll, format: :xlsx) %>">Download to Excel</a></div>
+      <div style="float:right; margin: 0 3px;" class="alert alert-danger">
+        <%= link_to "Delete", @payroll, method: :delete %> -- <strong>This cannot be undone!</strong>
+      </div>
+      <div class="alert alert-success" style="margin: 0 3px;"><a href="/payrolls/<%= @payroll.id %>/submit">Submit Payroll</a>
+      </div>
+    </ul>
+  </div>
+</nav>

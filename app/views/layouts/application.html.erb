@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AbcPayroll</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+
+    <% if current_company %>
+
+      <nav style="padding:0 0 5px;" class="nav navbar sticky-top navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img src="https://abcsolutionsfl.com/wp-content/uploads/2019/05/Logo-2019-S-e1557240836168.png" width="42" height="42" alt="">
+          </a>
+          <button class="nav navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="nav collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown" style="font-size:15px">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Employees
+                </a>
+                <div class="dropdown-menu scrollable-menu" aria-labelledby="navbarDropdown" role="menu">
+                  <a class="dropdown-item"href="/employees/new"><span class="glyphicon glyphicon-plus"><b> New</b></span></a>
+                  <a class="dropdown-item" href="/employees"><span class="glyphicon glyphicon-list-alt"><b> All</b></span></a>
+
+                  <div class="dropdown-divider"></div>
+
+                  <% current_company.employees.where(active:true).order('last_name').each do |emp| %>
+                    <a class="dropdown-item" href="/employees/<%= emp.id %>"><%= emp.full_name %></a>
+                  <% end %>
+
+                  <% if current_company.employees.where(active: false).any? %>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item"><b><u>Inactive</u></b></div>
+
+                    <% current_company.employees.where(active: false).order('last_name').each do |emp| %>
+                      <a class="dropdown-item" href="/employees/<%= emp.id %>"><%= emp.full_name %></a>
+                    <% end %>
+                  <% end %>
+                </div>
+              </li>
+
+              <li class="nav-item dropdown" style="font-size:15px">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/payrolls">
+                  Payroll
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item"href="/payrolls/new"><span class="glyphicon glyphicon-plus"><b> New</b></span></a>
+                  <a class="dropdown-item" href="/payrolls"><span class="glyphicon glyphicon-list-alt"><b> All</b></span></a>
+
+                  <div class="dropdown-divider"></div>
+
+                  <a class="dropdown-item" href="/payrolls/analytics">Analytics</a>
+
+                </div>
+              </li>
+              <li class="nav-item dropdown" style="font-size:15px">
+                <a class="nav-link dropdown-toggle" href="/adjustments" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Adjustment
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/adjustments/new"><span class="glyphicon glyphicon-plus"><b> New</b></a>
+                  <a class="dropdown-item" href="/adjustments"><span class="glyphicon glyphicon-list-alt"><b> All</b></span></a>
+                </div>
+              </li>
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="<%= company_path(current_company) %>">
+                <span class="glyphicon glyphicon-user"></span>  <%= current_company.name %>
+              </a></li>
+
+              <li><a href="<%= logout_path %>">
+                <span class="glyphicon glyphicon-log-in"></span> Logout
+              </a></li>
+            </ul>
+            <!-- <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+          </div>
+        </div>
+      </nav>
+
+    <% end %>
+
+
+    <% if current_company %>
+      <%= auto_session_timeout_js %>
+    <% end %>
+    <div class="body-body">
+      <% if flash[:message] %>
+        <h4 class="alert alert-success"><%= flash[:message] %></h4>
+      <% end %>
+      <% if flash[:alert] %>
+        <h4 class="alert alert-danger"><%= flash[:alert] %></h4>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

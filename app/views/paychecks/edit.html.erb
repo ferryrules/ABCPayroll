@@ -1,0 +1,72 @@
+<% if flash[:message] %>
+  <h4 class="alert alert-info"><%= flash[:message] %></h4>
+<% end %>
+
+<% @paycheck.attributes %>
+
+<h1>Payroll from <%= @paycheck.payroll.start_date %> to <%= @paycheck.payroll.end_date %> for <%= @paycheck.employee.full_name %></h1>
+
+<%= form_for @paycheck do |f| %>
+  <div class="container-float">
+    <div class="well well-lg">
+      <div class="row">
+        <div class="col-3">
+          <p><%= @paycheck.employee.pay_type %> employee</p>
+          <p>Pay Rate: $<%= @paycheck.employee.pay_rate %></p>
+        </div>
+
+        <div class="col-6">
+          <p><%= f.label :hours %>
+          <%= f.number_field :hours %></p>
+
+          <p><%= f.label :ot_hours, "OT Hours"%>
+          <%= f.number_field :ot_hours %></p>
+
+          <p><%= f.label :holiday_hours %>
+          <%= f.number_field :holiday_hours %></p>
+
+          <p><%= f.label :sick_hours %>
+          <%= f.number_field :sick_hours %></p>
+
+          <p><%= f.label :vacation_hours %>
+          <%= f.number_field :vacation_hours %></p>
+
+          <p><%= f.label :pto_hours, "PTO Hours" %>
+          <%= f.number_field :pto_hours %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br><hr><br>
+
+  <h2>Adjustments</h2>
+  <div class="container">
+    <div class="row">
+      <%= f.fields_for :paycheck_adjustments do |adj| %>
+          <div class="col-3.5 black-line-frame">
+            <p><%= adj.label :adj_type %>
+            <%= adj.select :adj_type, ["Addition", "Deduction"] %></p>
+
+            <p><%= adj.label :description %>
+            <%= adj.text_field :description %></p>
+
+            <p><%= adj.label :adj_amount %>
+            <%= adj.number_field :adj_amount, value: number_to_currency(adj.object.adj_amount.to_f, delimiter: '', unit: ''), step: :any %></p>
+
+            <p><%= link_to "Remove adjustment", "/paychecks/adjustment/#{adj.object.id}", method: :delete %></p>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <p><%= link_to "Add adjustment", new_paych_adj_path(paycheck_id: @paycheck.id), method: :post %></p>
+
+  <%= f.submit 'Save' %>
+<% end %>
+
+<!-- = form_for @user do |f|
+  = f.nested_fields_for :videos do |ff|
+    = ff.remove_nested_fields_link
+    = ff.text_field :video_title
+    ..
+  = f.add_nested_fields_link :videos -->

@@ -1,0 +1,24 @@
+<p id="notice" style="color:red;"><%= notice %></p>
+
+<br>
+
+<div class="well well-lg text-center col-md-6 col-md-offset-3">
+  <div class="well well-sm">
+    <a class="dropdown-item" href="/employees"><span class="glyphicon glyphicon-list-alt" style="margin-right: 15px"></span><b> All Employees </b> <span class="badge badge-light purple-button" style="margin-left: 5px"><%= current_company.employees.length %></span></a>
+    <a class="dropdown-item" href="/employees/new"><span class="glyphicon glyphicon-plus" style="margin-right: 5px"></span><b> Add New Employee</b></a>
+  </div>
+  <br>
+  <div class="well well-sm">
+    <a class="dropdown-item" href="/payrolls"><span class="glyphicon glyphicon-list-alt" style="margin-right: 17.5px"></span><b> All Payrolls </b> <span class="badge badge-light purple-button" style="margin-left: 17.5px"><%= current_company.payrolls.length %></span></a>
+    <a class="dropdown-item" href="/payrolls/new"><span class="glyphicon glyphicon-plus" style="margin-right: 5px"></span><b> Start New Payroll</b></a>
+  </div>
+  <br>
+  <div class="well well-sm">
+    <a class="dropdown-item" href="/adjustments"><span class="glyphicon glyphicon-list-alt" style="margin-right: 15px"></span><b> All Adjustments </b> <span class="badge badge-light purple-button" style="margin-left: 10px"><%= current_company.adjustments.length %></span></a>
+    <a class="dropdown-item" href="/adjustments/new"><span class="glyphicon glyphicon-plus" style="margin-right: 5px"></span><b> Add New Adjustment</b></a>
+  </div>
+  <br>
+  <div class="well well-sm">
+    <a class="dropdown-item" href="/payrolls/analytics"><span class="glyphicon glyphicon-list-alt" style="margin-right: 15px"></span><b> Payroll Analytics </b> <span class="badge badge-light purple-button" style="margin-left: 10px"><%= current_company.payrolls.length %></span></a>
+  </div>
+</div>

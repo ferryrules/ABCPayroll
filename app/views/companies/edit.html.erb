@@ -1,0 +1,12 @@
+<%= form_for @company do |f| %>
+  <p><%= f.label :name %>
+  <%= f.text_field :name %></p>
+
+  <p><%= f.label :username %>
+  <%= f.text_field :username %></p>
+
+  <p><%= f.label :password %>
+  <%= f.password_field :password %></p>
+
+  <p><%= f.submit %></p>
+<% end %>

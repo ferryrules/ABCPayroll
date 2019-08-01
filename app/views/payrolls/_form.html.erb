@@ -1,0 +1,118 @@
+<% if flash[:message] %>
+  <h4 class="alert alert-info"><%= flash[:message] %></h4>
+<% end %>
+
+<%= form_for @payroll do |f| %>
+  <%= f.hidden_field :company_id, value: current_company.id %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-1.5 col-sm-offset-4">
+        <%= f.label :start_date %>
+        <br>
+        <%= f.label :end_date %>
+
+      </div>
+
+      <div class="col-sm">
+        <%= f.date_field :start_date %>
+        <br>
+        <%= f.date_field :end_date %>
+      </div>
+
+    </div>
+  </div>
+
+  <br><br>
+
+  <div id="paychecks">
+    <%= f.fields_for :paychecks do |paycheck| %>
+
+      <div class="container-float">
+        <div class="well well-lg">
+          <div class="row">
+            <div class="col-3" style="margin: 0 10px 0 0;">
+              <h3><b><%= paycheck.object.employee.full_name %></b></h3><br>
+              Pay Type: <%= paycheck.object.employee.pay_type %><br>
+              Pay Rate: $<%= paycheck.object.employee.pay_rate %>
+            </div>
+
+            <div class="col-6">
+              <div class="well well-sm row">
+                <div class="col-4">
+                  <%= paycheck.label :hours %><br>
+                </div>
+                <div class="col-sm">
+                  <%= paycheck.number_field :hours %><br>
+                </div>
+              </div>
+
+              <div class="well well-sm row">
+                <div class="col-4">
+                  <%= paycheck.label :ot_hours, "OT Hours" %><br>
+                </div>
+                <div class="col-sm">
+                  <%= paycheck.number_field :ot_hours %><br>
+                </div>
+              </div>
+
+              <div class="well well-sm row">
+                <div class="col-4">
+                  <%= paycheck.label :holiday_hours %><br>
+                </div>
+                <div class="col-sm">
+                  <%= paycheck.number_field :holiday_hours %><br>
+                </div>
+              </div>
+
+              <div class="well well-sm row">
+                <div class="col-4">
+                  <%= paycheck.label :sick_hours %><br>
+                </div>
+                <div class="col-sm">
+                  <%= paycheck.number_field :sick_hours %><br>
+                </div>
+              </div>
+
+              <div class="well well-sm row">
+                <div class="col-4">
+                  <%= paycheck.label :vacation_hours %><br>
+                </div>
+                <div class="col-sm">
+                  <%= paycheck.number_field :vacation_hours %><br>
+                </div>
+              </div>
+
+              <div class="well well-sm row">
+                <div class="col-4">
+                  <%= paycheck.label :pto_hours, "PTO Hours" %>
+                </div>
+                <div class="col-sm">
+                  <%= paycheck.number_field :pto_hours %>
+                  <%= paycheck.hidden_field :employee_id, value: paycheck.object.employee.id %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br><hr><br>
+      </div><br>
+
+      <%#= paycheck.label :employee_name %>
+      <%#= paycheck.text_field :employee %>
+
+      <!-- <p><%#= paycheck.label :"employee[pay_type]" %>
+      <%#= paycheck.select :"employee[pay_type]", ["salary", "hourly"] %></p> -->
+    <% end %>
+  </div>
+
+  <%#= f.submit %>
+  <nav class="nav navbar fixed-bottom navbar-expand-lg navbar-light bg-light" style="margin: 0 25px 25px 25px;">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav nav">
+        <div class=""><%= f.submit %></div>
+      </ul>
+    </div>
+  </nav>
+<% end %>

@@ -1,0 +1,27 @@
+wb = xlsx_package.workbook
+
+wb.styles do |style|
+  project_heading = style.add_style(b: true, sz: 14)
+  heading = style.add_style(b: true)
+  blk_border = style.add_style :border => { :style => :thin, :color => "000000" }
+
+wb.add_worksheet(name: "Payroll") do |sheet|
+  # Create the header row
+  sheet.add_row [current_company.name], style: project_heading
+  sheet.add_row ["Payroll Start:", @payroll.start_date]
+  sheet.add_row ["Payroll Ended:", @payroll.end_date]
+  sheet.add_row [""]
+  sheet.add_row ["Employee", "Hours", "OT", "Holiday", "Sick", "Vacation", "PTO"], style: heading
+  # Create entries for each item
+  @payroll.paychecks.each do |paychk|
+    sheet.add_row [paychk.employee.full_name, paychk.hours, paychk.ot_hours, paychk.holiday_hours, paychk.sick_hours, paychk.vacation_hours, paychk.pto_hours]
+    if !paychk.employee.adjustments.empty?
+      sheet.add_row ["Adjustments"], style: blk_border
+      paychk.employee.adjustments.each do |adj|
+        sheet.add_row [adj.description + ": $" + adj.adj_amount.to_s]
+      end
+    end
+    sheet.add_row [""]
+  end
+end
+end

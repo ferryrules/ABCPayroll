@@ -1,0 +1,7 @@
+<h1><%= @company.name %></h1>
+
+<p><%= button_to "Edit Account Details", edit_company_path(current_company), method: :get %></p>
+
+<% @company.employees.each do |employee| %>
+  <p><%= link_to employee.full_name, employee %></p>
+<% end %>

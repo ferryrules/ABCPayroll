@@ -1,0 +1,13 @@
+<h1>Recurring Adjustments</h1>
+<br>
+<div class="well well-lg">
+  <% @adjustments.group("description").pluck(:description).each do |adj_desc| %>
+    <p><b><%= adj_desc %></b></p>
+    <div class="well well-sm">
+      <% @adjustments.where("description = ?", adj_desc).each do |adj| %>
+        <p>• <%= link_to "#{adj.employee.full_name}: $#{adj.adj_amount}", adj.employee %></p>
+      <% end %>
+    </div>
+    <br>
+  <% end %>
+</div>

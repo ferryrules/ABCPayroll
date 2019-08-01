@@ -1,0 +1,30 @@
+<h1>New Adjustment</h1>
+
+<div class="well well-lg" style="margin-right: 45px;">
+  <%= form_for @adjustment do |f| %>
+    <p><%= f.label :adj_type, "Adjustment Type" %>
+    <%= f.select(:adj_type,["Deduction", "Addition"]) %></p>
+
+    <p><%= f.label :description %>
+    <%= f.text_field :description %></p>
+
+    <p><%= f.label :adj_amount, "Adjustment Amount" %>
+    <%= f.number_field :adj_amount, value: number_to_currency(f.object.adj_amount.to_f, delimiter: '', unit: ''), step: :any %></p>
+
+    <table>
+      <%= f.collection_check_boxes(:employee_id, @employees, :id, :full_name, include_hidden: false) do |cb| %>
+        <tr>
+          <td><%= cb.label { cb.check_box + " " + cb.text } %></td>
+        </tr>
+      <% end %>
+    </table>
+
+    <br>
+
+    <p>
+      <span class="purple-button">
+        <%= f.submit %>
+      </span>
+    </p>
+  <% end %>
+</div>

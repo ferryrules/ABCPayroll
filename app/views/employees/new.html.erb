@@ -1,0 +1,54 @@
+<header>
+  <h1>Create New Employee</h1>
+</header>
+<% if flash[:message] %>
+  <h4 class="alert alert-danger"><%= flash[:message] %></h4>
+<% end %>
+<br>
+<%= form_for @employee do |f| %>
+  <div class="container">
+    <div class="row well well-lg">
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <b><%= f.label :first_name %></b>
+        <br><br>
+        <b><%= f.label :last_name %></b>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.text_field :first_name %>
+        <br><br>
+        <%= f.text_field :last_name %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.label :pay_type %>
+        <br><br>
+        <%= f.label :pay_rate %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.select :pay_type, ['Hourly', 'Salary'] %>
+        <br><br>
+        <%= f.number_field :pay_rate, value: number_to_currency(f.object.pay_rate.to_f, delimiter: '', unit: ''), step: :any %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.label :filing_status, "W4 Filing" %>
+        <br><br>
+        <%= f.label :allowances %>
+      </div>
+      <div class="float-col-sm" style="margin-right: 20px;">
+        <%= f.select :filing_status, ["Single", "Married"] %>
+        <br><br>
+        <%= f.number_field :allowances %>
+      </div>
+    </div>
+  </div>
+  
+  <%= f.hidden_field(:company_id, value: current_company.id) %>
+
+  <nav class="nav navbar fixed-bottom navbar-expand-lg navbar-light bg-light" style="margin: 0 25px 25px 25px;">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav nav purple-button">
+        <div><%= f.submit "Next"%></div>
+      </ul>
+    </div>
+  </nav>
+
+<% end %>

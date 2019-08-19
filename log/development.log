@@ -4083,3 +4083,614 @@ puma (3.12.1) lib/puma/server.rb:660:in `handle_request'
 puma (3.12.1) lib/puma/server.rb:474:in `process_client'
 puma (3.12.1) lib/puma/server.rb:334:in `block in run'
 puma (3.12.1) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+  [1m[36mCompany Load (0.4ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPayroll Load (0.6ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ? LIMIT ?[0m  [["company_id", 1], ["LIMIT", 11]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", "environment"]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ bin/rails:9
+  [1m[35m (7.8ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  ↳ bin/rails:9
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateCompanies (20190503144022)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "companies" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "username" varchar, "password_digest" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20190503144022_create_companies.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190503144022"]]
+  ↳ bin/rails:9
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreatePayrolls (20190503144326)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "payrolls" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "company_id" integer, "start_date" date, "end_date" date, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20190503144326_create_payrolls.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190503144326"]]
+  ↳ bin/rails:9
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreatePaychecks (20190503144553)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "paychecks" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "payroll_id" integer, "employee_id" integer, "hours" float DEFAULT 0.0, "vacation_hours" float DEFAULT 0.0, "pto_hours" float DEFAULT 0.0, "sick_hours" float DEFAULT 0.0, "holiday_hours" float DEFAULT 0.0, "ot_hours" float DEFAULT 0.0, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20190503144553_create_paychecks.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190503144553"]]
+  ↳ bin/rails:9
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateEmployees (20190503144955)
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "employees" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "first_name" varchar, "last_name" varchar, "company_id" integer, "pay_type" varchar, "pay_rate" float, "active" boolean DEFAULT 1, "filing_status" varchar DEFAULT 'Single', "allowances" integer DEFAULT 0, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL, CONSTRAINT "fk_rails_15ca1438d5"
+FOREIGN KEY ("company_id")
+  REFERENCES "companies" ("id")
+)[0m
+  ↳ db/migrate/20190503144955_create_employees.rb:3
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_employees_on_company_id" ON "employees" ("company_id")[0m
+  ↳ db/migrate/20190503144955_create_employees.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190503144955"]]
+  ↳ bin/rails:9
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreateAdjustments (20190503150155)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "adjustments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "adj_type" varchar, "description" varchar DEFAULT 'Enter description here', "adj_amount" float DEFAULT 9999.99, "employee_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20190503150155_create_adjustments.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190503150155"]]
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to CreatePaycheckAdjustments (20190507132615)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "paycheck_adjustments" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "paycheck_id" integer, "adj_type" varchar, "description" varchar DEFAULT 'Enter description here', "adj_amount" float DEFAULT 9999.99, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  ↳ db/migrate/20190507132615_create_paycheck_adjustments.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190507132615"]]
+  ↳ bin/rails:9
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+Migrating to AddCheckDateAndStatusToPayrolls (20190509190547)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "payrolls" ADD "check_date" date[0m
+  ↳ db/migrate/20190509190547_add_check_date_and_status_to_payrolls.rb:3
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "payrolls" ADD "status" varchar[0m
+  ↳ db/migrate/20190509190547_add_check_date_and_status_to_payrolls.rb:4
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20190509190547"]]
+  ↳ bin/rails:9
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2019-08-12 16:09:04.158295"], ["updated_at", "2019-08-12 16:09:04.158295"]]
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/seeds.rb:2
+  [1m[36mCompany Create (0.5ms)[0m  [1m[32mINSERT INTO "companies" ("name", "username", "password_digest", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Test Account"], ["username", "test"], ["password_digest", "$2a$10$CW6CugfNtDnMY55ncRPPAOL460S8Eyx2x9zZzt1.uwGMIA5Ti2ice"], ["created_at", "2019-08-12 16:09:05.440009"], ["updated_at", "2019-08-12 16:09:05.440009"]]
+  ↳ db/seeds.rb:2
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ db/seeds.rb:2
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ db/seeds.rb:4
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ db/seeds.rb:4
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  ↳ db/seeds.rb:4
+Started GET "/" for ::1 at 2019-08-12 12:09:19 -0400
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/ferrisboran/.rvm/gems/ruby-2.6.1/gems/activerecord-5.2.3/lib/active_record/log_subscriber.rb:98
+Processing by CompaniesController#_home as HTML
+Redirected to http://localhost:3000/login
+Filter chain halted as :authorize rendered or redirected
+Completed 302 Found in 20ms (ActiveRecord: 0.0ms)
+
+
+Started GET "/login" for ::1 at 2019-08-12 12:09:19 -0400
+Processing by SessionsController#new as HTML
+  Rendering sessions/index.html.erb within layouts/application
+  Rendered sessions/index.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 265ms (Views: 263.6ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/favicon.ico" for ::1 at 2019-08-12 12:09:20 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (5.2.3) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.7) lib/rack/method_override.rb:22:in `call'
+rack (2.0.7) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.7) lib/rack/sendfile.rb:111:in `call'
+railties (5.2.3) lib/rails/engine.rb:524:in `call'
+puma (3.12.1) lib/puma/configuration.rb:227:in `call'
+puma (3.12.1) lib/puma/server.rb:660:in `handle_request'
+puma (3.12.1) lib/puma/server.rb:474:in `process_client'
+puma (3.12.1) lib/puma/server.rb:334:in `block in run'
+puma (3.12.1) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started POST "/sessions" for ::1 at 2019-08-12 12:09:26 -0400
+Processing by SessionsController#create as HTML
+  Parameters: {"username"=>"test", "password"=>"[FILTERED]"}
+  [1m[36mCompany Load (0.2ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."username" = ? LIMIT ?[0m  [["username", "test"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:19
+Redirected to http://localhost:3000/
+Completed 302 Found in 68ms (ActiveRecord: 0.9ms)
+
+
+Started GET "/" for ::1 at 2019-08-12 12:09:26 -0400
+Processing by CompaniesController#_home as HTML
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  Rendering companies/_home.html.erb within layouts/application
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:7
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:12
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mAdjustment Load (0.2ms)[0m  [1m[34mSELECT "adjustments".* FROM "adjustments" INNER JOIN "employees" ON "adjustments"."employee_id" = "employees"."id" WHERE "employees"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:17
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Payroll Load (0.0ms)[0m  [1m[34mSELECT "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:22
+  Rendered companies/_home.html.erb within layouts/application (29.0ms)
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? ORDER BY last_name[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/views/layouts/application.html.erb:40
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? LIMIT ?[0m  [["company_id", 1], ["active", 0], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:44
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+Completed 200 OK in 49ms (Views: 45.7ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/favicon.ico" for ::1 at 2019-08-12 12:09:27 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+actionpack (5.2.3) lib/action_dispatch/middleware/debug_exceptions.rb:65:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (5.2.3) lib/rails/rack/logger.rb:38:in `call_app'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `block in tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (5.2.3) lib/active_support/tagged_logging.rb:71:in `tagged'
+railties (5.2.3) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.0.7) lib/rack/method_override.rb:22:in `call'
+rack (2.0.7) lib/rack/runtime.rb:22:in `call'
+activesupport (5.2.3) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (5.2.3) lib/action_dispatch/middleware/static.rb:127:in `call'
+rack (2.0.7) lib/rack/sendfile.rb:111:in `call'
+railties (5.2.3) lib/rails/engine.rb:524:in `call'
+puma (3.12.1) lib/puma/configuration.rb:227:in `call'
+puma (3.12.1) lib/puma/server.rb:660:in `handle_request'
+puma (3.12.1) lib/puma/server.rb:474:in `process_client'
+puma (3.12.1) lib/puma/server.rb:334:in `block in run'
+puma (3.12.1) lib/puma/thread_pool.rb:135:in `block in spawn_thread'
+Started GET "/payrolls/new" for ::1 at 2019-08-12 12:09:33 -0400
+Processing by PayrollsController#new as HTML
+  [1m[36mCompany Load (0.2ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ?[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/controllers/payrolls_controller.rb:31
+  Rendering payrolls/new.html.erb within layouts/application
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  Rendered payrolls/new.html.erb within layouts/application (17.0ms)
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? ORDER BY last_name[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/views/layouts/application.html.erb:40
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? LIMIT ?[0m  [["company_id", 1], ["active", 0], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:44
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+Completed 200 OK in 67ms (Views: 49.0ms | ActiveRecord: 1.7ms)
+
+
+Started POST "/payrolls" for ::1 at 2019-08-12 12:09:40 -0400
+Processing by PayrollsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"xBSzkZP5upl1BCEPM8FUjPbH+BXMMp4qJekl8GE3TJMeB4WxZtArgB7YLQ7rrS8D34rbqjr3dQiin95W7yUZFw==", "payroll"=>{"company_id"=>"1", "start_date"=>"2019-08-12", "end_date"=>"2019-08-19", "check_date"=>"2019-08-24"}, "commit"=>"Create Payroll"}
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:38
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/payrolls_controller.rb:40
+  [1m[36mPayroll Create (0.6ms)[0m  [1m[32mINSERT INTO "payrolls" ("company_id", "start_date", "end_date", "created_at", "updated_at", "check_date", "status") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["company_id", 1], ["start_date", "2019-08-12"], ["end_date", "2019-08-19"], ["created_at", "2019-08-12 16:09:40.661414"], ["updated_at", "2019-08-12 16:09:40.661414"], ["check_date", "2019-08-24"], ["status", "Created"]]
+  ↳ app/controllers/payrolls_controller.rb:40
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/payrolls_controller.rb:40
+  [1m[36mPaycheck Load (0.1ms)[0m  [1m[34mSELECT "paychecks".* FROM "paychecks" WHERE "paychecks"."payroll_id" = ?[0m  [["payroll_id", 1]]
+  ↳ app/controllers/payrolls_controller.rb:41
+Redirected to http://localhost:3000/payrolls/1
+Completed 302 Found in 25ms (ActiveRecord: 2.1ms)
+
+
+Started GET "/payrolls/1" for ::1 at 2019-08-12 12:09:40 -0400
+Processing by PayrollsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPayroll Load (0.2ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:94
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Payroll Load (0.0ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:102
+  [1m[36mPayroll Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "payrolls" WHERE "payrolls"."company_id" = ? AND "payrolls"."id" = ? LIMIT ?[0m  [["company_id", 1], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:102
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mPayroll Load (0.2ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ? AND "payrolls"."id" = ? LIMIT ?[0m  [["company_id", 1], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:6
+  Rendering payrolls/show.html.erb within layouts/application
+  [1m[36mPaycheck Load (0.1ms)[0m  [1m[34mSELECT "paychecks".* FROM "paychecks" WHERE "paychecks"."payroll_id" = ?[0m  [["payroll_id", 1]]
+  ↳ app/views/payrolls/show.html.erb:6
+  Rendered payrolls/show.html.erb within layouts/application (2.1ms)
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? ORDER BY last_name[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/views/layouts/application.html.erb:40
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? LIMIT ?[0m  [["company_id", 1], ["active", 0], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:44
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+Completed 200 OK in 58ms (Views: 51.4ms | ActiveRecord: 1.3ms)
+
+
+Started GET "/payrolls/1/submit" for ::1 at 2019-08-12 12:09:45 -0400
+Processing by PayrollsController#submit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:94
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[36mCompany Load (0.2ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[36mPayroll Update (0.6ms)[0m  [1m[33mUPDATE "payrolls" SET "status" = ?, "updated_at" = ? WHERE "payrolls"."id" = ?[0m  [["status", "Submitted"], ["updated_at", "2019-08-12 16:09:45.656712"], ["id", 1]]
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[35m (6.4ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  Rendering submit_mailer/submit_payroll.html.erb within layouts/mailer
+  Rendered submit_mailer/submit_payroll.html.erb within layouts/mailer (0.5ms)
+  Rendering submit_mailer/submit_payroll.text.erb within layouts/mailer
+  Rendered submit_mailer/submit_payroll.text.erb within layouts/mailer (0.3ms)
+SubmitMailer#submit_payroll: processed outbound mail in 32.1ms
+Sent mail to ferris@abcsolutionsfl.com (6.8ms)
+Date: Mon, 12 Aug 2019 12:09:45 -0400
+From: ABC Payroll
+To: ferris@abcsolutionsfl.com
+Message-ID: <5d518f49c4c0c_2e983fd294dd1df41198b@Ferriss-MacBook-Pro.local.mail>
+Subject: Test Account has submitted payroll
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_5d518f49c3d36_2e983fd294dd1df41185c";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_5d518f49c3d36_2e983fd294dd1df41185c
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hello Lovely!
+
+This is to let you know Test Account has submitted payroll. Please login to retrieve & have a great day!
+
+Love Always,
+Ferris
+
+
+----==_mimepart_5d518f49c3d36_2e983fd294dd1df41185c
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello Lovely!</h1>
+    <p>
+      This is to let you know Test Account has submitted payroll. Please login to retrieve & have a great day!!
+    </p>
+    <h3>Love Always,</h3>
+    <p>Ferris</p>
+  </body>
+</html>
+
+  </body>
+</html>
+
+----==_mimepart_5d518f49c3d36_2e983fd294dd1df41185c--
+
+Completed 500 Internal Server Error in 158ms (ActiveRecord: 7.5ms)
+
+
+  
+ArgumentError (SMTP-AUTH requested but missing secret phrase):
+  
+app/controllers/payrolls_controller.rb:20:in `submit'
+Started GET "/payrolls/1/submit" for ::1 at 2019-08-12 12:09:52 -0400
+Processing by PayrollsController#submit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:94
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[35m (0.1ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/payrolls_controller.rb:18
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  Rendering submit_mailer/submit_payroll.html.erb within layouts/mailer
+  Rendered submit_mailer/submit_payroll.html.erb within layouts/mailer (0.3ms)
+  Rendering submit_mailer/submit_payroll.text.erb within layouts/mailer
+  Rendered submit_mailer/submit_payroll.text.erb within layouts/mailer (0.2ms)
+SubmitMailer#submit_payroll: processed outbound mail in 7.6ms
+Sent mail to ferris@abcsolutionsfl.com (2.2ms)
+Date: Mon, 12 Aug 2019 12:09:52 -0400
+From: ABC Payroll
+To: ferris@abcsolutionsfl.com
+Message-ID: <5d518f504080b_2e983fd294dcd5c4121c2@Ferriss-MacBook-Pro.local.mail>
+Subject: Test Account has submitted payroll
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_5d518f503ff01_2e983fd294dcd5c412040";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_5d518f503ff01_2e983fd294dcd5c412040
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hello Lovely!
+
+This is to let you know Test Account has submitted payroll. Please login to retrieve & have a great day!
+
+Love Always,
+Ferris
+
+
+----==_mimepart_5d518f503ff01_2e983fd294dcd5c412040
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hello Lovely!</h1>
+    <p>
+      This is to let you know Test Account has submitted payroll. Please login to retrieve & have a great day!!
+    </p>
+    <h3>Love Always,</h3>
+    <p>Ferris</p>
+  </body>
+</html>
+
+  </body>
+</html>
+
+----==_mimepart_5d518f503ff01_2e983fd294dcd5c412040--
+
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.4ms)
+
+
+  
+ArgumentError (SMTP-AUTH requested but missing secret phrase):
+  
+app/controllers/payrolls_controller.rb:20:in `submit'
+Started GET "/payrolls/1" for ::1 at 2019-08-12 12:09:55 -0400
+Processing by PayrollsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:94
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Payroll Load (0.0ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:102
+  [1m[36mPayroll Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "payrolls" WHERE "payrolls"."company_id" = ? AND "payrolls"."id" = ? LIMIT ?[0m  [["company_id", 1], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:102
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ? AND "payrolls"."id" = ? LIMIT ?[0m  [["company_id", 1], ["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/payrolls_controller.rb:6
+  Rendering payrolls/show.html.erb within layouts/application
+  [1m[36mPaycheck Load (0.1ms)[0m  [1m[34mSELECT "paychecks".* FROM "paychecks" WHERE "paychecks"."payroll_id" = ?[0m  [["payroll_id", 1]]
+  ↳ app/views/payrolls/show.html.erb:6
+  Rendered payrolls/show.html.erb within layouts/application (2.2ms)
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.2ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? ORDER BY last_name[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/views/layouts/application.html.erb:40
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? LIMIT ?[0m  [["company_id", 1], ["active", 0], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:44
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+Completed 200 OK in 21ms (Views: 17.3ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for ::1 at 2019-08-12 12:09:57 -0400
+Processing by CompaniesController#_home as HTML
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  Rendering companies/_home.html.erb within layouts/application
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.1ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:7
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:12
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mAdjustment Load (0.1ms)[0m  [1m[34mSELECT "adjustments".* FROM "adjustments" INNER JOIN "employees" ON "adjustments"."employee_id" = "employees"."id" WHERE "employees"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:17
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Payroll Load (0.0ms)[0m  [1m[34mSELECT "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/companies/_home.html.erb:22
+  Rendered companies/_home.html.erb within layouts/application (13.9ms)
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? ORDER BY last_name[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/views/layouts/application.html.erb:40
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? LIMIT ?[0m  [["company_id", 1], ["active", 0], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:44
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+Completed 200 OK in 44ms (Views: 39.5ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/payrolls" for ::1 at 2019-08-12 12:09:59 -0400
+Processing by PayrollsController#index as HTML
+  Rendering payrolls/index.html.erb within layouts/application
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mPayroll Load (0.1ms)[0m  [1m[34mSELECT "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ?[0m  [["company_id", 1]]
+  ↳ app/views/payrolls/index.html.erb:14
+  Rendered payrolls/index.html.erb within layouts/application (2.9ms)
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Load (0.3ms)[0m  [1m[34mSELECT "employees".* FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? ORDER BY last_name[0m  [["company_id", 1], ["active", 1]]
+  ↳ app/views/layouts/application.html.erb:40
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mEmployee Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "employees" WHERE "employees"."company_id" = ? AND "employees"."active" = ? LIMIT ?[0m  [["company_id", 1], ["active", 0], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:44
+  [1m[36mCACHE Company Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+  [1m[36mCACHE Company Load (0.0ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" WHERE "companies"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:10
+Completed 200 OK in 33ms (Views: 30.8ms | ActiveRecord: 0.9ms)
+
+
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mCompany Load (0.1ms)[0m  [1m[34mSELECT  "companies".* FROM "companies" ORDER BY "companies"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mPayroll Load (0.2ms)[0m  [1m[34mSELECT  "payrolls".* FROM "payrolls" WHERE "payrolls"."company_id" = ? LIMIT ?[0m  [["company_id", 1], ["LIMIT", 11]]
